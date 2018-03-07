@@ -7,10 +7,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "ITEM")
+@XmlRootElement
 public class Item {
 
 	@Id @GeneratedValue(strategy= GenerationType.AUTO)
