@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Profile("secure")
@@ -27,16 +26,24 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-			.antMatchers(AUTH_WHITELIST).authenticated()
-			.antMatchers(HttpMethod.GET, "/items/**").authenticated()
-			.and()
-				.formLogin()
-			.and()
-				.logout()
-					.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-					.logoutSuccessUrl("/login");;
+		http
+			.headers()
+				.frameOptions().disable()
+				.and()
+			.csrf().disable()
+			.authorizeRequests()
+				.antMatchers("/h2-console/**").permitAll()
+				.antMatchers(AUTH_WHITELIST).permitAll()
+				.antMatchers(HttpMethod.GET, "/items/**").authenticated()
+				.anyRequest().authenticated()
+				.and()
+			.formLogin()
+				.and()
+			.logout()
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.logoutSuccessUrl("/login");
 	}
+
 
 	@Bean
 	public DaoAuthenticationProvider authProvider(UserDetailsService userDetailsService) {

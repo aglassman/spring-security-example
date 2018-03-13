@@ -1,5 +1,7 @@
 package com.aglassman.springsecurityexample.inventory;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -7,31 +9,35 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PostFilter;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @RepositoryRestResource(path= "/items", collectionResourceRel = "items", itemResourceRel = "item")
 public interface InventoryRestRepository extends PagingAndSortingRepository<Item,Long>{
 
 	@RestResource(path = "byItemName", rel = "byItemName")
-	Page findByItemNameIgnoreCaseContaining(
+	Page<Item> findByItemNameIgnoreCaseContaining(
 		@Param("itemName") String itemName,
 		Pageable p);
 
 	@RestResource(path = "byDescription", rel = "byDescription")
-	Page findByDescriptionIgnoreCaseContaining(
+	Page<Item> findByDescriptionIgnoreCaseContaining(
 		@Param("description") String description,
 		Pageable p);
 
 	@RestResource(path = "bySku", rel = "bySku")
-	Page findBySku(
+	Page<Item> findBySku(
 		@Param("sku") String sku,
 		Pageable p);
 
 	@RestResource(path = "byUpc", rel = "byUpc")
-	Page findByUpc(
+	@PreAuthorize("hasAuthority('EMPLOYEE')")
+	Page<Item> findByUpc(
 		@Param("upc") String upc,
 		Pageable p);
 
-	@PostAuthorize("returnObject.isPreferredOnly() ?  hasRole('PREFERRED_VENDOR') : isAuthenticated()")
+	@PostAuthorize("returnObject.isPreferredOnly() ?  (hasAuthority('EMPLOYEE') or hasAuthority('PREFERRED_VENDOR')) : isAuthenticated()")
 	Item findOne(Long aLong);
+
+	public List<Item> getItems();
+
 }

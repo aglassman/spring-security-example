@@ -1,13 +1,15 @@
 package com.aglassman.springsecurityexample.inventory;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "ITEM")
@@ -20,6 +22,9 @@ public class Item {
 	private String itemName;
 	private String description;
 	private boolean preferredOnly;
+
+	@OneToMany(fetch= FetchType.LAZY, mappedBy = "item")
+	private List<Stock> stockList;
 
 	public Item() {
 	}
@@ -70,6 +75,14 @@ public class Item {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public List<Stock> getStockList() {
+		return stockList;
+	}
+
+	public void setStockList(List<Stock> stockList) {
+		this.stockList = stockList;
 	}
 
 	@Override

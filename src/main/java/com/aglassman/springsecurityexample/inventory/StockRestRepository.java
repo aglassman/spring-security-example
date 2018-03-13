@@ -11,17 +11,17 @@ import org.springframework.data.rest.core.annotation.RestResource;
 public interface StockRestRepository extends PagingAndSortingRepository<Stock,Long>{
 
 	@RestResource(path = "byItemId", rel = "byItemId")
-	Page findByItemId(
+	Page<Stock> findByItemId(
 		@Param("itemId") Long itemId,
 		Pageable p);
 
 	@RestResource(path = "byLocation", rel = "byLocation")
-	Page findByLocationIgnoreCase(
+	Page<Stock> findByLocationIgnoreCase(
 		@Param("location") String location,
 		Pageable p);
 
 	@RestResource(path = "byLocationAndItemId", rel = "byLocationAndItemId")
-	Page findByLocationIgnoreCaseAndItemId(
+	Page<Stock> findByLocationIgnoreCaseAndItemId(
 		@Param("location") String location,
 		@Param("itemId") Long itemId,
 		Pageable p);

@@ -1,12 +1,14 @@
 package com.aglassman.springsecurityexample.inventory;
 
-import java.time.OffsetDateTime;
 import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,9 +18,12 @@ public class Stock {
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	private Long id;
-	private Long itemId;
-	private OffsetDateTime stockedOn;
+
 	private String location;
+
+	@ManyToOne(fetch= FetchType.LAZY)
+	@JoinColumn(name="item_id", insertable = false, updatable = false)
+	private Item item;
 
 	public Stock() {
 	}
@@ -31,22 +36,6 @@ public class Stock {
 		this.id = id;
 	}
 
-	public Long getItemId() {
-		return itemId;
-	}
-
-	public void setItemId(Long itemId) {
-		this.itemId = itemId;
-	}
-
-	public OffsetDateTime getStockedOn() {
-		return stockedOn;
-	}
-
-	public void setStockedOn(OffsetDateTime stockedOn) {
-		this.stockedOn = stockedOn;
-	}
-
 	public String getLocation() {
 		return location;
 	}
@@ -55,12 +44,18 @@ public class Stock {
 		this.location = location;
 	}
 
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder("Stock{");
 		sb.append("id=").append(id);
-		sb.append(", itemId=").append(itemId);
-		sb.append(", stockedOn=").append(stockedOn);
 		sb.append(", location='").append(location).append('\'');
 		sb.append('}');
 		return sb.toString();
@@ -76,14 +71,12 @@ public class Stock {
 		}
 		Stock stock = (Stock) o;
 		return Objects.equals(id, stock.id) &&
-			Objects.equals(itemId, stock.itemId) &&
-			Objects.equals(stockedOn, stock.stockedOn) &&
 			Objects.equals(location, stock.location);
 	}
 
 	@Override
 	public int hashCode() {
 
-		return Objects.hash(id, itemId, stockedOn, location);
+		return Objects.hash(id, location);
 	}
 }

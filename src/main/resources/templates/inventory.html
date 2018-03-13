@@ -5,6 +5,19 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<p th:text="'Hello, ' + ${name} + '!'" />
+<p th:text="'Welcome, ' + ${name} + '!'" />
+<h1>Inventory Report</h1>
+<h2 th:text="'Item: ' + ${item.itemName}">Item</h2>
+<ul>
+	<li th:text="'Description: ' + ${item.description}">Description</li>
+	<li th:text="'SKU: ' + ${item.sku}">SKU</li>
+	<li th:text="'UPC: ' + ${item.upc}">UPC</li>
+	<li th:text="${item.preferredOnly} ? 'Preferred vendors only.' : 'Available to all vendors.'">PREFERRED?</li>
+</ul>
+
+<h2 th:text="${stockPage.getTotalElements()} + ' items currently in stock.'"></h2>
+<th:block th:each="item : ${stockPage.getContent()}">
+	<div th:text="${item.id} + ': ' + ${item.location}"></div>
+</th:block>
 </body>
 </html>
