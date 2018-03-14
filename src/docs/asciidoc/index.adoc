@@ -1,0 +1,21 @@
+ifndef::version[]
+:version: 0.0.0
+endif::version[]
+
+:toc: left
+
+= Inventory API {version}
+
+== Overview
+
+This document will walk you thorugh the basic resources of the Inventory API.
+
+For interactive docs, see the http://localhost:8080/swagger-ui.html[Hosted Swagger Documentation]
+
+include::snippet-example.adoc[]
+
+include::items.adoc[]
+
+include::stock.adoc[]
+
+include::reports.adoc[]

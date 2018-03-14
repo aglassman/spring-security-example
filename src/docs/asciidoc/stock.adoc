@@ -1,0 +1,7 @@
+ifndef::snippets[]
+:snippets: ../../../build/generated-snippets
+endif::snippets[]
+
+== Stock
+
+	Detials on the Stock resource.

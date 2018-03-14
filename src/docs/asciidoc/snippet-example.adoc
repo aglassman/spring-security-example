@@ -1,0 +1,10 @@
+ifndef::source[]
+:source: ../../../src/main/java
+endif::source[]
+
+== Granted Authorities
+
+[source,java,indent=0]
+----
+include::{source}/com/aglassman/springsecurityexample/security/CustomAuthorities.java[tags=customAuthorities]
+----

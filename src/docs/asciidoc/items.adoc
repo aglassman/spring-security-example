@@ -1,0 +1,35 @@
+ifndef::snippets[]
+:snippets: ../../../build/generated-snippets
+endif::snippets[]
+
+== Items
+
+	Here are some details on how to use the Items resource.
+
+=== GET
+==== ALL
+====
+*Request*
+include::{snippets}/test-get-all-items/1/http-request.adoc[]
+*Response*
+include::{snippets}/test-get-all-items/1/http-response.adoc[]
+====
+
+==== One
+====
+*Request*
+include::{snippets}/test-get-one-item_non-preferred/1/http-request.adoc[]
+*Response*
+include::{snippets}/test-get-one-item_non-preferred/1/http-response.adoc[]
+
+*Links*
+include::{snippets}/item-links/links.adoc[]
+====
+
+==== Search
+====
+*Request*
+include::{snippets}/test-get-item-search/1/http-request.adoc[]
+*Response*
+include::{snippets}/test-get-item-search/1/http-response.adoc[]
+====

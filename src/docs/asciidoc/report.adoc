@@ -1,0 +1,12 @@
+ifndef::snippets[]
+:snippets: ../../../build/generated-snippets
+endif::snippets[]
+
+== Report
+
+	Only users with the canReport flag set to true on their profile can view reports.
+
+====
+*Request*
+include::{snippets}/test-get-inventory-report/1/http-request.adoc[]
+====

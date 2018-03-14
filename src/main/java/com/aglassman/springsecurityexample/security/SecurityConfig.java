@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Profile("secure")
@@ -35,6 +36,7 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/h2-console/**").permitAll()
 				.antMatchers(AUTH_WHITELIST).permitAll()
 				.antMatchers(HttpMethod.GET, "/items/**").authenticated()
+				.antMatchers(HttpMethod.DELETE).hasAnyAuthority("EMPLOYEE")
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()
@@ -49,7 +51,7 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public DaoAuthenticationProvider authProvider(UserDetailsService userDetailsService) {
 		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 		authProvider.setUserDetailsService(userDetailsService);
-		//authProvider.setPasswordEncoder(new BCryptPasswordEncoder());
+		authProvider.setPasswordEncoder(new BCryptPasswordEncoder());
 		return authProvider;
 	}
 

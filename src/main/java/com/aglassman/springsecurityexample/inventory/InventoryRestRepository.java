@@ -1,7 +1,5 @@
 package com.aglassman.springsecurityexample.inventory;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -37,7 +35,5 @@ public interface InventoryRestRepository extends PagingAndSortingRepository<Item
 
 	@PostAuthorize("returnObject.isPreferredOnly() ?  (hasAuthority('EMPLOYEE') or hasAuthority('PREFERRED_VENDOR')) : isAuthenticated()")
 	Item findOne(Long aLong);
-
-	public List<Item> getItems();
 
 }

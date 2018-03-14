@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-@Profile("unsecure")
+@Profile("!secure")
 @Configuration
 class PermitAllConfig extends WebSecurityConfigurerAdapter {
 	@Override
